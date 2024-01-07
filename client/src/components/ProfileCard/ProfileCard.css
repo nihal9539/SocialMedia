@@ -39,7 +39,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
 .followStatus>hr{
     width: 85%;
@@ -48,7 +47,9 @@
 .followStatus>div{
     gap: 1rem;
     display: flex;
-    flex-direction: co;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
 }
 .verticalLine
 {
