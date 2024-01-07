@@ -1,0 +1,85 @@
+.Auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 4rem;
+    position: relative;
+
+}
+
+.Auth>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.a-left {
+    gap: 2rem;
+}
+
+.a-left>img {
+    width: 4rem;
+    height: 4rem;
+}
+
+.WebName>h1 {
+    font-size: 3rem;
+    background-image: var(--buttonBg);
+    background-size: 100%;
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+}
+
+.WebName>h6 {
+    font-size: 0.85rem;
+
+}
+
+.InfoForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.InfoInput {
+    border: none;
+    outline: none;
+    background-color: var(--inputColor);
+    padding: 15px;
+    border-radius: 8px;
+    flex: 1;
+}
+
+.InfoForm>div {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    height: 2rem;
+    width: 90%;
+}
+
+.submit-btn {
+    width: 6rem;
+    height: 2rem;
+    align-self: flex-end;
+}
+
+.authForm {
+    background-color: var(--cardColor);
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.authForm>div {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+}
