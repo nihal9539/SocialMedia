@@ -39,3 +39,7 @@
   transition: 100ms ease-out;
 
 }
+
+::-webkit-scrollbar{
+  display: none;
+}
