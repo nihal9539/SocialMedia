@@ -62,3 +62,63 @@ export const deleteUser = async (req, res) => {
         res.status(403).json("Access denied you can only delete your own profile")
     }
 }
+//Follow a user 
+export const followUser = async (req, res) => {
+    const { id } = req.params;
+    const { currentUserId } = req.body;
+
+
+    if (id === currentUserId) {
+
+        res.status(403).json("Action forhidden")
+
+
+    } else {
+        try {
+
+          const followUser =await UserModel.findById(id)
+          const followingUser =await UserModel.findById(currentUserId)
+
+          if (!followUser.followers.includes(currentUserId)) {
+            await followUser.updateOne({$push:{followers:currentUserId}})
+            await followingUser.updateOne({$push:{following:id}})
+            return res.status(409).json('user followed')
+          }else{
+            return res.status(409).json(' user is already following')
+          }
+
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    }
+}
+//Unfollow User a user 
+export const unfollowUser = async (req, res) => {
+    const { id } = req.params;
+    const { currentUserId } = req.body;
+
+
+    if (id === currentUserId) {
+
+        res.status(403).json("Action forhidden")
+
+
+    } else {
+        try {
+
+          const followUser =await UserModel.findById(id)
+          const followingUser =await UserModel.findById(currentUserId)
+
+          if (followUser.followers.includes(currentUserId)) {
+            await followUser.updateOne({$pull:{followers:currentUserId}})
+            await followingUser.updateOne({$pull:{following:id}})
+            return res.status(409).json('user unfollowed')
+          }else{
+            return res.status(409).json(' user is not followed by You')
+          }
+
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    }
+}
