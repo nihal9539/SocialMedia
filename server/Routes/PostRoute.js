@@ -1,5 +1,5 @@
 import express from "express"
-import { createPost, deletePost, getPost, likePost, updatePost } from "../Controller/PostController.js"
+import { createPost, deletePost, getPost, getTimeLinePosts, likePost, updatePost } from "../Controller/PostController.js"
 const router = express.Router()
 
 
@@ -8,4 +8,5 @@ router.get('/:id',getPost)
 router.put('/:id',updatePost)
 router.delete('/:id',deletePost)
 router.put('/:id/like',likePost)
+router.get('/:id/timeline',getTimeLinePosts)
 export default router
