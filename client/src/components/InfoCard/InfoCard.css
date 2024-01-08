@@ -17,8 +17,8 @@
     cursor: pointer;
 }
 .lgout-button{
-  width: 70%;
+  width: 50%;
   height: 2rem;
   margin-top: 1rem;
-  align-self: center;
+  align-self: flex-end;
 }

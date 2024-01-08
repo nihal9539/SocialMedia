@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./InfoCard.css"
 import { UilPen } from "@iconscout/react-unicons"
+import { ProfileModel } from '../ProfileModel/ProfileModel'
 const InfoCard = () => {
+    const [modelOpen,setModelOpen]=useState(false)
     return (
         <div className='InfoCard'>
             <div className="InfoHead">
                 <h4>your Info</h4>
-                <div>
+                <div onClick={()=>setModelOpen(true)}>
 
-                <UilPen width='2rem' height='1.5rem'/>
+                <UilPen width='2rem' height='1.5rem' />
+
                 </div>
+                <ProfileModel ModelOpene={modelOpen} setModelOpen={setModelOpen}/>
+                {/* {open && <ProfileModel/>} */}
             </div>
             <div className="info">
                 <span><b>Status</b></span>
