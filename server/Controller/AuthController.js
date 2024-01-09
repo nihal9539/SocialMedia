@@ -18,10 +18,11 @@ export const registerUser = async (req, res) => {
         const user = await newUser.save()
         const token = jwt.sign({
             username: user.username,
-            id: user._id
             
-        }, process.env.JWT_SECRET ,{ expiresIn: '2'})
-        res.status(200).json({user,token})
+            id: user._id
+
+        }, process.env.JWT_SECRET, { expiresIn: '2' })
+        res.status(200).json({ user, token })
 
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -37,9 +38,19 @@ export const loginUser = async (req, res) => {
         const user = await UserModel.findOne({ username: username })
         if (user) {
             const validity = await bcypt.compare(password, user.password)
-            validity ? res.status(200).json(user) : res.status(400).json("Wrong password")
-        } else {
+            if (!validity) {
+
+                res.status(400).json("Wrong password")
+            } else {
+                const token = jwt.sign({
+                    username: user.username,
+                    id: user._id
+        
+                }, process.env.JWT_SECRET, { expiresIn: '2' })
+                res.status(200).json({ user, token })
+            }
             res.status(404).json('user Not found')
+        } else {
         }
     } catch (error) {
         res.status(500).json({ message: error.message })
