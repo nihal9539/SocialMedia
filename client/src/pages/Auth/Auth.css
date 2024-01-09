@@ -83,3 +83,7 @@
     justify-content: center;
 
 }
+.submit-btn:disabled{
+    background-color: red;
+    cursor: none;
+  }
