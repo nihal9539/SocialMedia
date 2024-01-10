@@ -12,6 +12,10 @@ import UploadRoute from "./Routes/uploadRoute.js"
 
 
 const app = express()
+
+//serch images for public
+app.use(express.static('public'))
+app.use('/images',express.static("images"))
 // Middeleware
 app.use(cors())
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
