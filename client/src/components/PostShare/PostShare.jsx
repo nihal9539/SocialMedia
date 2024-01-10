@@ -8,8 +8,9 @@ import { UilSchedule } from "@iconscout/react-unicons"
 import { UilTimes } from "@iconscout/react-unicons"
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { uploadImage } from '../../Action/uploadAction'
+import { uploadImage, uploadPost } from '../../Action/uploadAction'
 const PostShare = () => {
+    const loading = useSelector((state)=>state.postReducer.uploading)
     const [image, setImage] = useState(null)
     const imageRef = useRef()
     const dispatch = useDispatch()
@@ -21,6 +22,11 @@ const PostShare = () => {
             let img = event.target.files[0]
             setImage(img)
         }
+    }
+
+    const reset = ()=>{
+        setImage(null)
+        desc.current.value = null
     }
     const handleSubmit = (e)=>{
         e.preventDefault();
@@ -42,6 +48,8 @@ const PostShare = () => {
                 console.log(error);
             }
         }
+        dispatch(uploadPost(newPost))
+        reset()
     }
     return (
         <div className='PostShare'>
@@ -75,8 +83,10 @@ const PostShare = () => {
                         <UilSchedule />
                         Shedule
                     </div>
-                    <button className='button post-button' onClick={handleSubmit}>
-                        Share
+                    <button
+                    disabled={loading}
+                    className='button post-button' onClick={handleSubmit}>
+                        {loading ? "Uploading" : "Share"}
                     </button>
                     <div style={{ display: "none" }}>
                         <input
