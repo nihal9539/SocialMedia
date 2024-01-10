@@ -2,30 +2,34 @@ import React from 'react'
 import Cover from "../../img/cover.jpg"
 import Profile from "../../img/profileImg.jpg"
 import "./ProfileCard.css"
+import { useSelector } from 'react-redux'
+import { Link, NavLink } from "react-router-dom"
 const ProfileCard = () => {
 
-    const ProfilePage = true
+    const { user } = useSelector((state) => state.authReducer.authData)
+    const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
+    const ProfilePage = false
     return (
         <div className='ProfileCard'>
             <div className="ProfileImages">
-                <img src={Cover} alt="" />
-                <img src={Profile} alt="" />
+                <img src={user.coverPicture ? serverPublic + user.coverPicture : Cover} alt="" />
+                <img src={user.profilePicture ? serverPublic + user.profilePicture : Profile} alt="" />
             </div>
             <div className="ProfileName">
-                <span>Nihal</span>
-                <span>Status</span>
+                <span>{user.firstname} {user.lastname}</span>
+                <span>{user.worksAt ? user.worksAt : "Write about your self"}</span>
             </div>
             <div className="followStatus">
                 <hr />
                 <div>
                     <div className="follow">
-                        <span>200</span>
+                        <span>{user.following.length}</span>
 
                         <span>Followings</span>
                     </div>
                     <div className='verticalLine'></div>
                     <div className="follow">
-                        <span>10</span>
+                        <span>{user.followers.length}</span>
 
                         <span>Followings</span>
                     </div>
@@ -46,7 +50,10 @@ const ProfileCard = () => {
             {
                 ProfilePage ? "" :
                     <span>
-                        My Profile
+                        <Link to={`/profile/${user._id}`} style={{textDecoration:"none", color:"inherit"}}>
+
+                            My Profile
+                        </Link>
                     </span>
             }
         </div>
