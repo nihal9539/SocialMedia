@@ -7,7 +7,6 @@ import { Link, NavLink } from "react-router-dom"
 const ProfileCard = ({location}) => {
 
     const { user } = useSelector((state) => state.authReducer.authData)
-    console.log(user);
     const post = useSelector((state) => state.postReducer.posts)
     const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
   

@@ -1,6 +1,6 @@
 const authReducer =
     (state = { authData: null, loading: false, error: false, updateLoading: true }, action) => {
-        console.log("Action received in Auth Reducer", action);
+        // console.log("Action received in Auth Reducer", action);
         switch (action.type) {
             case "AUTH_START":
                 return { ...state, loading: true, error: false }
@@ -12,7 +12,6 @@ const authReducer =
             case 'UPDATING_START':
                 return { ...state, updateLoading: true, error: false }
             case 'UPDATING_SUCCESS':
-                console.log(action.data);
                 localStorage.setItem('profile',JSON.stringify({...action?.data}))
                 return { ...state, authData: action.data, updateLoading: false, error: false }
             case 'UPDATING_FAIL':

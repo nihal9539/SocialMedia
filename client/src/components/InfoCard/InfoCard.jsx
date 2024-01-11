@@ -19,17 +19,17 @@ const InfoCard = () => {
         const fetchProfileUsr = async () => {
             if (profileUserId === user._id) {
                 setProfileUser(user)
-                console.log(user);
+                
             } else {
                 const profileUser = await UserApi.getUser(profileUserId)
                 setProfileUser(profileUser)
-                console.log(profileUser);
+           
             }
         }
         fetchProfileUsr();
         
     }, [user])
-    console.log(profileUser);
+
 
     const handleLogout = ()=>{
         dispatch(logout())

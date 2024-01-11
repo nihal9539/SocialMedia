@@ -3,6 +3,20 @@ import bcypt from "bcrypt"
 import jwt from "jsonwebtoken";
 
 
+export const getAllUser = async (req, res) => {
+    try {
+        let users = await UserModel.find()
+        users = users.map((user)=>{
+            const {password,...othersDetails}  = user._doc
+            return othersDetails
+        })
+        res.status(200).json(users)
+
+    } catch (error) {
+         console.log(error.message);
+         res.status(500).json(error)
+    }
+}
 export const getUser = async (req, res) => {
 
 
@@ -27,7 +41,7 @@ export const getUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     const { id } = req.params;
     const { _id, currentUserAdminStatus, password } = req.body;
-    if (id === _id ) {
+    if (id === _id) {
 
         try {
             if (password) {
@@ -38,14 +52,14 @@ export const updateUser = async (req, res) => {
             const user = await UserModel.findByIdAndUpdate(id, req.body, { new: true })
 
             const token = jwt.sign({
-                username:user.username,
-                id:user
+                username: user.username,
+                id: user
             },
-            process.env.JWT_KEY,
-            {expireIn:"1h"}
-            
+                process.env.JWT_KEY,
+                { expireIn: "1h" }
+
             )
-            res.status(200).json({user,token})
+            res.status(200).json({ user, token })
 
         } catch (error) {
             res.status(500).json(error.message)
@@ -88,16 +102,16 @@ export const followUser = async (req, res) => {
     } else {
         try {
 
-          const followUser =await UserModel.findById(id)
-          const followingUser =await UserModel.findById(currentUserId)
+            const followUser = await UserModel.findById(id)
+            const followingUser = await UserModel.findById(currentUserId)
 
-          if (!followUser.followers.includes(currentUserId)) {
-            await followUser.updateOne({$push:{followers:currentUserId}})
-            await followingUser.updateOne({$push:{following:id}})
-            return res.status(409).json('user followed')
-          }else{
-            return res.status(409).json(' user is already following')
-          }
+            if (!followUser.followers.includes(currentUserId)) {
+                await followUser.updateOne({ $push: { followers: currentUserId } })
+                await followingUser.updateOne({ $push: { following: id } })
+                return res.status(409).json('user followed')
+            } else {
+                return res.status(409).json(' user is already following')
+            }
 
         } catch (error) {
             res.status(500).json(error)
@@ -118,16 +132,16 @@ export const unfollowUser = async (req, res) => {
     } else {
         try {
 
-          const followUser =await UserModel.findById(id)
-          const followingUser =await UserModel.findById(currentUserId)
+            const followUser = await UserModel.findById(id)
+            const followingUser = await UserModel.findById(currentUserId)
 
-          if (followUser.followers.includes(currentUserId)) {
-            await followUser.updateOne({$pull:{followers:currentUserId}})
-            await followingUser.updateOne({$pull:{following:id}})
-            return res.status(409).json('user unfollowed')
-          }else{
-            return res.status(409).json(' user is not followed by You')
-          }
+            if (followUser.followers.includes(currentUserId)) {
+                await followUser.updateOne({ $pull: { followers: currentUserId } })
+                await followingUser.updateOne({ $pull: { following: id } })
+                return res.status(409).json('user unfollowed')
+            } else {
+                return res.status(409).json(' user is not followed by You')
+            }
 
         } catch (error) {
             res.status(500).json(error)

@@ -6,7 +6,6 @@ import Profile from "./pages/Profile/Profile";
 import {Routes,Route,Navigate} from "react-router-dom"
 function App() {
   const user = useSelector((state)=>state.authReducer.authData)
-  console.log(user);
   return (
     <div className="App">
         <div style={{top:'-18%' ,right:'0'}} className="blur"></div>
