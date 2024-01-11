@@ -14,7 +14,7 @@ export const signup = (formData) => async (dispatch) => {
       dispatch({type:'AUTH_START'});
       try {
           const { data } = await AuthAPI.signup(formData)
-          dispatch({type:'AUTH_SUCESS'});
+          dispatch({type:'AUTH_SUCESS',data:data});
         } catch (error) {
             console.log(error);
             dispatch({type:'AUTH_FAIL'});

@@ -3,11 +3,13 @@ import Logo from "../../img/logo.png"
 import "./Auth.css"
 import { login, signup } from '../../Action/AuthAction.js'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 
 const Auth = () => {
     const dispatch = useDispatch()
-    const loading = useSelector((state) => state.authReducer.loading)
+    const navigate = useNavigate()
+    const {loading, error } = useSelector((state) => state.authReducer)
     const [isSignup, setIsSignup] = useState(false)
     console.log(loading);
     const [data, setData] = useState({
@@ -22,11 +24,23 @@ const Auth = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         if (isSignup) {
-            data.password === data.confirmpassword ? dispatch(signup(data)) : setConfirmpass(false)
+            if(data.password === data.confirmpassword) {
+
+                dispatch(signup(data))
+                 navigate('../home')
+            }else{
+
+                 setConfirmpass(false)
+            }
 
 
         } else {
+            console.log("hi");
             dispatch(login(data))
+            if (loading && error) {
+                console.log("check password");
+            }
+
         }
     }
     const resetForm = () => {
@@ -112,6 +126,9 @@ const Auth = () => {
 
 
                     </div>
+                    <span style={{ display: confirmPass ? "none" : "block", color: "red", fontSize: "12px", alignSelf: 'flex-end', marginRight: "5px" }}>
+                        Confirm password is not same
+                    </span>
                     <span style={{ display: confirmPass ? "none" : "block", color: "red", fontSize: "12px", alignSelf: 'flex-end', marginRight: "5px" }}>
                         Confirm password is not same
                     </span>

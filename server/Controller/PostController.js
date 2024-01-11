@@ -65,8 +65,10 @@ export const deletePost = async (req, res) => {
 //like and unlike post
 export const likePost = async (req, res) => {
     const id = req.params.id
+    console.log(id);
 
     const { userId } = req.body;
+    console.log(userId);
   
     try {
         const post = await PostModel.findById(id)

@@ -39,7 +39,7 @@ export const loginUser = async (req, res) => {
         if (user) {
             const validity = await bcypt.compare(password, user.password)
             if (!validity) {
-
+                
                 res.status(400).json("Wrong password")
             } else {
                 const token = jwt.sign({
