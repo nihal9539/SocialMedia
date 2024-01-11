@@ -91,10 +91,10 @@ export const deleteUser = async (req, res) => {
 //Follow a user 
 export const followUser = async (req, res) => {
     const { id } = req.params;
-    const { currentUserId } = req.body;
+    const { _id } = req.body;
 
 
-    if (id === currentUserId) {
+    if (id === _id) {
 
         res.status(403).json("Action forhidden")
 
@@ -103,28 +103,28 @@ export const followUser = async (req, res) => {
         try {
 
             const followUser = await UserModel.findById(id)
-            const followingUser = await UserModel.findById(currentUserId)
+            const followingUser = await UserModel.findById(_id)
 
-            if (!followUser.followers.includes(currentUserId)) {
-                await followUser.updateOne({ $push: { followers: currentUserId } })
+            if (!followUser.followers.includes(_id)) {
+                await followUser.updateOne({ $push: { followers: _id } })
                 await followingUser.updateOne({ $push: { following: id } })
-                return res.status(409).json('user followed')
+                return res.status(200).json('user followed')
             } else {
                 return res.status(409).json(' user is already following')
             }
 
         } catch (error) {
-            res.status(500).json(error)
+            res.status(500).json(erroe.messager)
         }
     }
 }
 //Unfollow User a user 
 export const unfollowUser = async (req, res) => {
     const { id } = req.params;
-    const { currentUserId } = req.body;
+    const { _id } = req.body;
 
 
-    if (id === currentUserId) {
+    if (id === _id) {
 
         res.status(403).json("Action forhidden")
 
@@ -133,12 +133,12 @@ export const unfollowUser = async (req, res) => {
         try {
 
             const followUser = await UserModel.findById(id)
-            const followingUser = await UserModel.findById(currentUserId)
+            const followingUser = await UserModel.findById(_id)
 
-            if (followUser.followers.includes(currentUserId)) {
-                await followUser.updateOne({ $pull: { followers: currentUserId } })
+            if (followUser.followers.includes(_id)) {
+                await followUser.updateOne({ $pull: { followers: _id } })
                 await followingUser.updateOne({ $pull: { following: id } })
-                return res.status(409).json('user unfollowed')
+                return res.status(200).json('user unfollowed')
             } else {
                 return res.status(409).json(' user is not followed by You')
             }
