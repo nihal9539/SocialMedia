@@ -49,8 +49,9 @@ export const loginUser = async (req, res) => {
                 }, process.env.JWT_SECRET, { expiresIn: '2' })
                 res.status(200).json({ user, token })
             }
-            res.status(404).json('user Not found')
         } else {
+            res.status(404).json('user Not found')
+           
         }
     } catch (error) {
         res.status(500).json({ message: error.message })

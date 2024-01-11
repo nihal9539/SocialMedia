@@ -4,11 +4,12 @@ import Profile from "../../img/profileImg.jpg"
 import "./ProfileCard.css"
 import { useSelector } from 'react-redux'
 import { Link, NavLink } from "react-router-dom"
-const ProfileCard = () => {
+const ProfileCard = ({location}) => {
 
     const { user } = useSelector((state) => state.authReducer.authData)
+    const post = useSelector((state) => state.postReducer.posts)
     const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
-    const ProfilePage = false
+  
     return (
         <div className='ProfileCard'>
             <div className="ProfileImages">
@@ -33,11 +34,11 @@ const ProfileCard = () => {
 
                         <span>Followings</span>
                     </div>
-                    {ProfilePage && (
+                    {location === "profilePage" && (
                         <>
                             <div className="verticalLine"></div>
                             <div className="follow">
-                                <span>5</span>
+                                <span>{post.filter((post)=>post.userId === user._id).length}</span>
 
                                 <span>Posts</span>
                             </div>
@@ -48,7 +49,7 @@ const ProfileCard = () => {
                 <hr />
             </div>
             {
-                ProfilePage ? "" :
+                location === "profilePage" ? "" :
                     <span>
                         <Link to={`/profile/${user._id}`} style={{textDecoration:"none", color:"inherit"}}>
 

@@ -9,7 +9,7 @@ const Profile = () => {
 
         <div className="ProfileSlide">
             <LogoSearch />
-            <ProfileCard />
+            <ProfileCard location="homePage" />
             <FollowersCard />
         </div>
 
