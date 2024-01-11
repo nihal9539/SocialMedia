@@ -13,8 +13,8 @@ const InfoCard = () => {
     const profileUserId = params.id
     const [profileUser, setProfileUser] = useState({})
     const { user } = useSelector((state) => state.authReducer.authData)
-
-
+    
+    
     useEffect(() => {
         const fetchProfileUsr = async () => {
             if (profileUserId === user._id) {
@@ -27,8 +27,9 @@ const InfoCard = () => {
             }
         }
         fetchProfileUsr();
-
+        
     }, [user])
+    console.log(profileUser);
 
     const handleLogout = ()=>{
         dispatch(logout())
@@ -52,15 +53,15 @@ const InfoCard = () => {
                  setModelOpen={setModelOpen} />
             </div>
             <div className="info">
-                <span><b>Status</b></span>
+                <span><b>Status : </b></span>
                 <span>{profileUser.relationship}</span>
             </div>
             <div className="info">
-                <span><b>Lives In</b></span>
+                <span><b>Lives In : </b></span>
                 <span>{profileUser.livesIn}</span>
             </div>
             <div className="info">
-                <span><b>Works At</b></span>
+                <span><b>Works At : </b></span>
                 <span>{profileUser.worksAt}</span>
             </div>
             <button className='button lgout-button' onClick={handleLogout}>Logout</button>

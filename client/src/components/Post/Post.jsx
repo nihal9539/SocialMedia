@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { likePost } from '../../api/postRequest'
 const Post = ({ data, id }) => {
     const {user} = useSelector((state)=>state.authReducer.authData)
+    console.log(data);
 
 const [liked,setLiked] = useState(data.like.includes(user._id))
 const [likes,setLikes] = useState(data.like.length)

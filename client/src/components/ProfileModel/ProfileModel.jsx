@@ -3,6 +3,8 @@ import { Modal, Button } from '@mantine/core';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { uploadImage } from '../../Action/uploadAction';
+import { updateUser } from '../../Action/userAction';
 
 export function ProfileModel({ ModelOpene, setModelOpen, data }) {
     //   const [opened, { open, close }] = useState(false);
@@ -15,6 +17,7 @@ export function ProfileModel({ ModelOpene, setModelOpen, data }) {
     const { user } = useSelector((state) => state.authReducer.authData)
 
     const handleChange = (e) => {
+        console.log(e.target.name + e.target.value);
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
     const onImageChange = (e) => {
@@ -24,21 +27,37 @@ export function ProfileModel({ ModelOpene, setModelOpen, data }) {
         }
     }
     const handleSubmit = (e) => {
-        e.preventDefault()
-        let userData = formData;
+        e.preventDefault();
+        let UserData = formData;
         if (profileImage) {
-            const data = new formData()
+            const data = new FormData();
             const fileName = Date.now() + profileImage.name;
-            data.append("name",fileName);
-            data.append("file",profileImage)
-            userData.profilePicture = fileName
+            data.append("name", fileName);
+            data.append("file", profileImage);
+            UserData.profilePicture = fileName;
             try {
-                // dispatch
-            } catch (error) {
-                
+                console.log(data);
+                dispatch(uploadImage(data));
+            } catch (err) {
+                console.log(err);
             }
         }
-    }
+        if (coverImage) {
+            const data = new FormData();
+            const fileName = Date.now() + coverImage.name;
+            data.append("name", fileName);
+            data.append("file", coverImage);
+            UserData.coverPicture = fileName;
+            try {
+                console.log(data);
+                dispatch(uploadImage(data));
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        dispatch(updateUser(params.id, UserData));
+        setModelOpen(false);
+    };
 
     return (
         <>
