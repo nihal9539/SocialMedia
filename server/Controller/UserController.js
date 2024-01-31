@@ -49,7 +49,7 @@ export const updateUser = async (req, res) => {
                 req.body.password = await bcypt.hash(password, salt)
                 console.log(req.body);
             }
-            const user = await UserModel.findByIdAndUpdate(id, req.body, { new: true })
+            const user = await UserModel.findByIdAndUpdate(id, zz, { new: true })
 
             const token = jwt.sign({
                 username: user.username,

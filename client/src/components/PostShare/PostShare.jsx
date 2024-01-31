@@ -11,12 +11,12 @@ import { useDispatch } from 'react-redux'
 import { uploadImage, uploadPost } from '../../Action/uploadAction'
 
 const PostShare = () => {
-    const loading = useSelector((state)=>state.postReducer.uploading)
+    const loading = useSelector((state) => state.postReducer.uploading)
     const [image, setImage] = useState(null)
     const imageRef = useRef()
     const dispatch = useDispatch()
     const desc = useRef()
-    const user = useSelector((state)=>state.authReducer.authData.user)
+    const user = useSelector((state) => state.authReducer.authData.user)
     const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
@@ -25,22 +25,22 @@ const PostShare = () => {
         }
     }
 
-    const reset = ()=>{
+    const reset = () => {
         setImage(null)
         desc.current.value = null
     }
-    const handleSubmit = (e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault();
-      
-        const newPost={
+
+        const newPost = {
             userId: user._id,
-            desc:desc.current.value
+            desc: desc.current.value
         }
         if (image) {
             const data = new FormData()
             const fileName = Date.now() + image.name
-            data.append("name",fileName)
-            data.append("file",image)
+            data.append("name", fileName)
+            data.append("file", image)
             newPost.image = fileName
             console.log(newPost);
             try {
@@ -54,13 +54,13 @@ const PostShare = () => {
     }
     return (
         <div className='PostShare'>
-            <img src={user.profilePicture ? serverPublic + user.profilePicture :ProfileImage} alt="" />
+            <img src={user.profilePicture ? serverPublic + user.profilePicture : ProfileImage} alt="" />
             <div>
                 <input
-                ref={desc}
-                required
-                type="text"
-                 placeholder="What's Happening" />
+                    ref={desc}
+                    required
+                    type="text"
+                    placeholder="What's Happening" />
                 <div className="PostOption">
                     <div className="option"
                         onClick={() => imageRef.current.click()}
@@ -85,8 +85,8 @@ const PostShare = () => {
                         Shedule
                     </div>
                     <button
-                    disabled={loading}
-                    className='button post-button' onClick={handleSubmit}>
+                        disabled={loading}
+                        className='button post-button' onClick={handleSubmit}>
                         {loading ? "Uploading" : "Share"}
                     </button>
                     <div style={{ display: "none" }}>

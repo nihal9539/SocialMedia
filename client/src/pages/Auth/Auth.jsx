@@ -25,7 +25,7 @@ const Auth = () => {
         e.preventDefault()
         if (isSignup) {
             if(data.password === data.confirmpassword) {
-
+                
                 dispatch(signup(data))
                  navigate('../home')
             }else{

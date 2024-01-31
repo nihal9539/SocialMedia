@@ -13,25 +13,25 @@ const InfoCard = () => {
     const profileUserId = params.id
     const [profileUser, setProfileUser] = useState({})
     const { user } = useSelector((state) => state.authReducer.authData)
-    
-    
+
+
     useEffect(() => {
         const fetchProfileUsr = async () => {
             if (profileUserId === user._id) {
                 setProfileUser(user)
-                
+
             } else {
                 const profileUser = await UserApi.getUser(profileUserId)
                 setProfileUser(profileUser)
-           
+
             }
         }
         fetchProfileUsr();
-        
+
     }, [user])
 
 
-    const handleLogout = ()=>{
+    const handleLogout = () => {
         dispatch(logout())
     }
     return (
@@ -48,9 +48,9 @@ const InfoCard = () => {
                 }
 
                 <ProfileModel
-                 ModelOpene={modelOpen}
-                 data={user}
-                 setModelOpen={setModelOpen} />
+                    ModelOpene={modelOpen}
+                    data={user}
+                    setModelOpen={setModelOpen} />
             </div>
             <div className="info">
                 <span><b>Status : </b></span>
