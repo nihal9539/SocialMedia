@@ -115,13 +115,6 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
                                 onChange={handleChange}
                             />
                             <div className="send-button button" onClick={handleSend}>Send</div>
-                            {/* <input
-                                type="file"
-                                name=""
-                                id=""
-                                style={{ display: "none" }}
-                                ref={imageRef}
-                            /> */}
                         </div>{" "}
                     </>
                 ) : (
