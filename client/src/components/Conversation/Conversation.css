@@ -1,0 +1,30 @@
+.image {
+    width: 50px;
+    border-radius: 50%;
+    position: absolute;
+    /* bottom: -3rem; */
+    box-shadow: var(--profileShadow);
+}
+
+.conversation {
+    height: 3rem;
+
+}
+
+.chatlist {
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+}
+
+
+
+.name {
+    gap: 7px;
+}
+.name .online{
+font-size: 1rem;
+}
+.online-dot{
+    z-index: 1;
+}

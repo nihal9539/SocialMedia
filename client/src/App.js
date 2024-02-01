@@ -4,6 +4,7 @@ import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile/Profile";
 import {Routes,Route,Navigate} from "react-router-dom"
+import Chat from "./pages/chat/chat";
 function App() {
   const user = useSelector((state)=>state.authReducer.authData)
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={user ?<Navigate to="home"/>:<Navigate to="auth"/>}/>
         <Route path="/home" element={user?<Home />:<Navigate to="../auth"/>}></Route>
         <Route path="/auth" element={user?<Navigate to="../home"/>:<Auth/>}></Route>
+        <Route path="/chat" element={user?<Chat/>:<Auth/>}></Route>
         <Route path="/profile/:id" element={user?<Profile />:<Navigate to="../auth"/>}></Route>
        </Routes>
     </div>
