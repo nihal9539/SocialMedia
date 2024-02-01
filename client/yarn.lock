@@ -1130,6 +1130,16 @@
   dependencies:
     postcss-value-parser "^4.2.0"
 
+"@emoji-mart/data@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/@emoji-mart/data/-/data-1.1.2.tgz"
+  integrity sha512-1HP8BxD2azjqWJvxIaWAMyTySeZY0Osr83ukYjltPVkNXeJvTz7yDrPLBtnrD5uqJ3tg4CcLuuBW09wahqL/fg==
+
+"@emoji-mart/react@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.npmjs.org/@emoji-mart/react/-/react-1.1.1.tgz"
+  integrity sha512-NMlFNeWgv1//uPsvLxvGQoIerPuVdXwK/EUek8OOkJ6wVOWPUizRBJU0hDqWZCOROVpfBgCemaC3m6jDOXi03g==
+
 "@emotion/cache@^11.7.1", "@emotion/cache@11.7.1":
   version "11.7.1"
   resolved "https://registry.npmjs.org/@emotion/cache/-/cache-11.7.1.tgz"
@@ -4057,6 +4067,11 @@ emittery@^0.8.1:
   version "0.8.1"
   resolved "https://registry.npmjs.org/emittery/-/emittery-0.8.1.tgz"
   integrity sha512-uDfvUjVrfGJJhymx/kz6prltenw1u7WrCg1oa94zYY8xxVpLLUu045LAT0dhDZdXG58/EpPL/5kA180fQ/qudg==
+
+emoji-mart@^5.2, emoji-mart@5.5.2:
+  version "5.5.2"
+  resolved "https://registry.npmjs.org/emoji-mart/-/emoji-mart-5.5.2.tgz"
+  integrity sha512-Sqc/nso4cjxhOwWJsp9xkVm8OF5c+mJLZJFoFfzRuKO+yWiN7K8c96xmtughYb0d/fZ8UC6cLIQ/p4BR6Pv3/A==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -7682,7 +7697,7 @@ react-dev-utils@^12.0.0:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
-react-dom@*, "react-dom@^16.8.0 || ^17 || ^18", react-dom@^17.0.2, react-dom@>=16.8, react-dom@>=16.8.0:
+react-dom@*, "react-dom@^16.8.0 || ^17 || ^18", react-dom@^17.0.2, react-dom@>=16.8, react-dom@>=16.8.0, react-dom@>=17.0.x:
   version "17.0.2"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
   integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
@@ -7700,6 +7715,15 @@ react-fast-compare@^3.0.1:
   version "3.2.0"
   resolved "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.0.tgz"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
+
+react-input-emoji@^5.6.5:
+  version "5.6.5"
+  resolved "https://registry.npmjs.org/react-input-emoji/-/react-input-emoji-5.6.5.tgz"
+  integrity sha512-TtvWCoco+ext3sr8/0Q/4itCm06H2PXH++XHinblT6Y97V43UU3YzUUnlv0U6eM0yfJuFTxs8LdjAMeS+jj6ag==
+  dependencies:
+    "@emoji-mart/data" "1.1.2"
+    "@emoji-mart/react" "1.1.1"
+    emoji-mart "5.5.2"
 
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
@@ -7820,7 +7844,7 @@ react-textarea-autosize@^8.3.2:
     use-composed-ref "^1.0.0"
     use-latest "^1.0.0"
 
-react@*, "react@^16.8 || ^17.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.3 || ^17 || ^18", react@^17.0.2, "react@>= 16", react@>=16.8, react@>=16.8.0, react@17.0.2:
+react@*, "react@^16.8 || ^17 || ^18", "react@^16.8 || ^17.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.3 || ^17 || ^18", react@^17.0.2, "react@>= 16", react@>=16.8, react@>=16.8.0, react@>=17.0.x, react@17.0.2:
   version "17.0.2"
   resolved "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
@@ -8835,6 +8859,11 @@ thunky@^1.0.2:
   version "1.1.0"
   resolved "https://registry.npmjs.org/thunky/-/thunky-1.1.0.tgz"
   integrity sha512-eHY7nBftgThBqOyHGVN+l8gF0BucP09fMo0oO/Lb0w1OF80dJv+lDVpXG60WMQvkcxAkNybKsrEIE3ZtKGmPrA==
+
+timeago.js@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.npmjs.org/timeago.js/-/timeago.js-4.0.2.tgz"
+  integrity sha512-a7wPxPdVlQL7lqvitHGGRsofhdwtkoSXPGATFuSOA2i1ZNQEPLrGnj68vOp2sOJTCFAQVXPeNMX/GctBaO9L2w==
 
 timsort@^0.3.0:
   version "0.3.0"
