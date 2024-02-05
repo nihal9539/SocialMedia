@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { getUser } from '../../api/userRequest';
 import Profile from "../../img/profileImg.jpg"
 import "./ChatBox.css"
-import { getMessages } from '../../api/MessageRequest';
+import { addMessage, getMessages } from '../../api/MessageRequest';
 import { format } from "timeago.js"
 import InputEmoji from "react-input-emoji"
 
@@ -17,9 +17,30 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
     const handleChange = (newMsg) => {
         setNewMessage(newMsg)
     }
-    const handleSend = (newMsg) => {
-        setNewMessage(newMsg)
+    const handleSend = async(e) => {
+        e.preventDefault()
+        const message = {
+          senderId : currentUser,
+          text: newMessage,
+          chatId: chat._id,
+      }
+      const receiverId = chat.members.find((id)=>id!==currentUser);
+      // send message to socket server
+      setSendMessage({...message, receiverId})
+      // send message to database
+      try {
+        const { data } = await addMessage(message);
+        setMessages([...messages, data]);
+        setNewMessage("");
+      }
+      catch
+      {
+        console.log("error")
+      }
     }
+
+    
+
 
     useEffect(() => {
         const userId = chat?.members?.find((id) => id !== currentUser);
@@ -52,6 +73,14 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
 
         if (chat !== null) fetchingMessage();
     }, [chat])
+    useEffect(()=> {
+        console.log("Message Arrived: ", receivedMessage)
+        if (receivedMessage !== null && receivedMessage.chatId === chat._id) {
+          setMessages([...messages, receivedMessage]);
+        }
+      
+      },[receivedMessage])
+    
     return (
         <>
             <div className="ChatBox-container">

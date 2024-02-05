@@ -9,7 +9,7 @@ import ChatBox from '../../components/ChatBox/ChatBox';
 import {io} from "socket.io-client"
 const Chat = () => {
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const socket = useRef();
     const { user } = useSelector((state) => state.authReducer.authData);
     const [chats, setChats] = useState([]);
