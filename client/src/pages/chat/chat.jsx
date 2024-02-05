@@ -6,11 +6,26 @@ import { userChats } from '../../api/ChatRequesst';
 import Conversation from '../../components/Conversation/Conversation';
 import NavIcons from '../../components/NavIcons/NavIcons';
 import ChatBox from '../../components/ChatBox/ChatBox';
+import {io} from "socket.io-client"
 const Chat = () => {
 
     const dispatch = useDispatch();
     const socket = useRef();
     const { user } = useSelector((state) => state.authReducer.authData);
+    const [chats, setChats] = useState([]);
+    const [onlineUsers, setOnlineUsers] = useState([]);
+    const [currentChat, setCurrentChat] = useState(null);
+    const [sendMessage, setSendMessage] = useState(null);
+    const [receivedMessage, setReceivedMessage] = useState(null);
+
+
+    useEffect(()=>{
+        socket.current = io("http://localhost/8800")
+        socket.current.emit('new-user-add',user._id)
+        socket.current.on("get-users",(users)=>{
+            setOnlineUsers(users)
+        })
+    },[user])
 
     useEffect(() => {
         const getChats = async () => {
@@ -25,11 +40,7 @@ const Chat = () => {
         getChats();
       }, [user._id]);
 
-    const [chats, setChats] = useState([]);
-    const [onlineUsers, setOnlineUsers] = useState([]);
-    const [currentChat, setCurrentChat] = useState(null);
-    const [sendMessage, setSendMessage] = useState(null);
-    const [receivedMessage, setReceivedMessage] = useState(null);
+
     return (
         <div className="Chat">
             {/* Left Side */}
