@@ -15,8 +15,6 @@ export const createPost = async (req, res) => {
 }
 export const getPost = async (req, res) => {
     const { id } = req.params
-
-
     try {
         const post = await PostModel.findById(id)
         res.status(200).json(post)
@@ -65,29 +63,23 @@ export const deletePost = async (req, res) => {
 //like and unlike post
 export const likePost = async (req, res) => {
     const id = req.params.id
-    console.log(id);
-
     const { userId } = req.body;
-    console.log(userId);
+  
   
     try {
-        const post = await PostModel.findById(id)
-        if (post !== null && post.userId == userId) {
-            if (!post.like.includes(userId)) {
-                await PostModel.findByIdAndUpdate(id ,{ $push: {like:userId}})
-                res.status(200).json("post liked")
-            } else {
-                await PostModel.findByIdAndUpdate(id ,{ $pull: {like:userId}})
-                res.status(200).json("post unlike")
-
-
-            }
+        const post = await PostModel.findById(id);
+        console.log(post);
+        if (post.like.includes(userId)) {
+            await post.updateOne({ $pull: { like: userId } });
+            res.status(200).json("Post disliked");
         } else {
-            res.status(403).json("post not found")
+ 
+            await post.updateOne({ $push: { like: userId } });
+          res.status(200).json("Post liked");
         }
-    } catch (error) {
-        res.status(500).json(error.message)
-    }
+      } catch (error) {
+        res.status(500).json(error);
+      }
 }
 
 //Get time line

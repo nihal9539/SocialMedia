@@ -13,33 +13,34 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const imageRef = useRef()
+    const scroll = useRef()
 
     const handleChange = (newMsg) => {
         setNewMessage(newMsg)
     }
-    const handleSend = async(e) => {
+    const handleSend = async (e) => {
         e.preventDefault()
         const message = {
-          senderId : currentUser,
-          text: newMessage,
-          chatId: chat._id,
-      }
-      const receiverId = chat.members.find((id)=>id!==currentUser);
-      // send message to socket server
-      setSendMessage({...message, receiverId})
-      // send message to database
-      try {
-        const { data } = await addMessage(message);
-        setMessages([...messages, data]);
-        setNewMessage("");
-      }
-      catch
-      {
-        console.log("error")
-      }
+            senderId: currentUser,
+            text: newMessage,
+            chatId: chat._id,
+        }
+        const receiverId = chat.members.find((id) => id !== currentUser);
+        // send message to socket server
+        setSendMessage({ ...message, receiverId })
+        // send message to database
+        try {
+            const { data } = await addMessage(message);
+            setMessages([...messages, data]);
+            setNewMessage("");
+        }
+        catch
+        {
+            console.log("error")
+        }
     }
 
-    
+
 
 
     useEffect(() => {
@@ -73,14 +74,19 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
 
         if (chat !== null) fetchingMessage();
     }, [chat])
-    useEffect(()=> {
+    useEffect(() => {
         console.log("Message Arrived: ", receivedMessage)
         if (receivedMessage !== null && receivedMessage.chatId === chat._id) {
-          setMessages([...messages, receivedMessage]);
+            setMessages([...messages, receivedMessage]);
         }
-      
-      },[receivedMessage])
-    
+
+    }, [receivedMessage])
+
+    // always scroll to last 
+    useEffect(()=>{
+        scroll.current?.scrollIntoView({behavioe:"smooth"})
+    },[messages])
+
     return (
         <>
             <div className="ChatBox-container">
@@ -122,7 +128,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
                             {messages.map((message) => (
                                 <>
                                     <div
-                                        // ref={scroll}
+                                        ref={scroll}
                                         className={
                                             message.senderId === currentUser
                                                 ? "message own"
@@ -139,7 +145,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
                         <div className="chat-sender">
                             <div onClick={() => imageRef.current.click()}>+</div>
                             <InputEmoji
-                            
+
                                 value={newMessage}
                                 onChange={handleChange}
                             />

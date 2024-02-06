@@ -6,7 +6,7 @@ import { userChats } from '../../api/ChatRequesst';
 import Conversation from '../../components/Conversation/Conversation';
 import NavIcons from '../../components/NavIcons/NavIcons';
 import ChatBox from '../../components/ChatBox/ChatBox';
-import {io} from "socket.io-client"
+import { io } from "socket.io-client"
 const Chat = () => {
 
     // const dispatch = useDispatch();
@@ -18,27 +18,42 @@ const Chat = () => {
     const [sendMessage, setSendMessage] = useState(null);
     const [receivedMessage, setReceivedMessage] = useState(null);
 
-
-    useEffect(()=>{
-        socket.current = io("http://localhost/8800")
-        socket.current.emit('new-user-add',user._id)
-        socket.current.on("get-users",(users)=>{
+    useEffect(() => {
+        socket.current = io("ws://localhost/8800")
+        socket.current.emit('new-user-add', user._id)
+        socket.current.on("get-users", (users) => {
             setOnlineUsers(users)
         })
-    },[user])
+    }, [user])
+
+    // send message to socket server
+    useEffect(() => {
+
+        socket.current.emit('send-message', sendMessage)
+    }, [sendMessage])
+
+    // recieve message
+    useEffect(() => {
+
+        socket.current.on('receive-message', (data) => {
+            console.log(data);
+            setReceivedMessage(data)
+        })
+    }, [])
+
 
     useEffect(() => {
         const getChats = async () => {
-          try {
-            const { data } = await userChats(user._id);
-            setChats(data);
-            console.log(data);
-          } catch (error) {
-            console.log(error);
-          }
+            try {
+                const { data } = await userChats(user._id);
+                setChats(data);
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+            }
         };
         getChats();
-      }, [user._id]);
+    }, [user._id]);
 
 
     return (
@@ -55,11 +70,11 @@ const Chat = () => {
                                     setCurrentChat(chat);
                                 }}
                             >
-                                
+
                                 <Conversation
                                     data={chat}
                                     currentUser={user._id}
-                                    // online={checkOnlineStatus(chat)}
+                                // online={checkOnlineStatus(chat)}
                                 />
                             </div>
                         ))}
