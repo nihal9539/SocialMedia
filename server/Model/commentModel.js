@@ -9,11 +9,12 @@ const commentSchema = new mongoose.Schema({
     },
     userId: {
         type: String,
+        ref:'user',
         required: true
     },
     postId: {
         type: String,
-        ref: 'Post',
+        // ref: 'Post',
         required: true
     },
 

@@ -1,24 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Comment from "../../img/comment.png"
 import Share from "../../img/share.png"
 import Heart from "../../img/like.png"
 import NotLike from "../../img/notlike.png"
 import "./Post.css"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { likePost } from '../../api/postRequest'
 import { IoMdSend } from "react-icons/io";
 import Profile from "../../img/profileImg.jpg"
+import { createComment, getComment } from '../../Action/CommentAction'
 
 const Post = ({ data, id }) => {
 
+    const dispatch = useDispatch()
     const { user } = useSelector((state) => state.authReducer.authData)
 
     const [liked, setLiked] = useState(data.like.includes(user._id))
     const [likes, setLikes] = useState(data.like.length)
     const [commentSectionOpen, setCommentSectionOpen] = useState(false)
-    const [comments, setComments] = useState("")
-    const [commentsArray, setCommentsArray] = useState([])
-    console.log(data);
+    const [comment, setComments] = useState("")
+    let { comments, loading ,uploading } = useSelector((state) => state.commentReducer)
+    useEffect(() => {
+        dispatch(getComment(data._id))
+    }, [comment])
     const handleLike = () => {
         setLiked((prev) => !prev)
         likePost(data._id, user._id)
@@ -26,15 +30,24 @@ const Post = ({ data, id }) => {
     }
     const commentOpen = () => {
         setCommentSectionOpen(!commentSectionOpen)
-
+        
     }
     const handlecomment = (e) => {
         e.preventDefault()
-
-        setCommentsArray([...commentsArray, { comments }])
+        const  commentss ={
+            userId : user._id,
+            postId:data._id,
+            comment:comment
+        }
+        try {
+            dispatch(createComment(commentss))
+        } catch (error) {
+            console.log(error);
+        }
         setComments("")
-
+        
     }
+  
     return (
         <div className='Post'>
             <img src={data.image ? process.env.REACT_APP_PUBLIC_FOLDER + data.image : ""} alt="" />
@@ -53,7 +66,7 @@ const Post = ({ data, id }) => {
             <div className='LogoSearch'>
                 {/* <img src={Logo} alt="" /> */}
                 <form onSubmit={handlecomment} className="search">
-                    <input type="text" placeholder='Write a Comment' value={comments} onChange={(e) => setComments(e.target.value)} />
+                    <input type="text" placeholder='Write a Comment' value={comment} onChange={(e) => setComments(e.target.value)} />
                     <button type='submit' className="s-icon">
 
                         <IoMdSend size={25} />
@@ -65,8 +78,8 @@ const Post = ({ data, id }) => {
             {commentSectionOpen ?
                 <div className="comment">
 
-                    {commentsArray.length !== 0 ?
-                        commentsArray.map((commments) => {
+                    { loading || uploading ? "loading..":
+                        comments.map((commments) => {
 
                             return (
                                 <div className='commenter'>
@@ -77,7 +90,7 @@ const Post = ({ data, id }) => {
                                     </div>
                                     <div className='secondchild'>
                                         <span>Mohammed Nihal</span>
-                                        <p>{commments.comments}</p>
+                                        <p>{commments.comment}</p>
                                     </div>
 
 
@@ -85,11 +98,7 @@ const Post = ({ data, id }) => {
 
                             )
                         })
-                        :
-                        <div>
-                            No comments
-                            {console.log("empty")}
-                        </div>
+                       
                     }
 
 

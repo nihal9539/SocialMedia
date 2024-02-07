@@ -5,17 +5,17 @@ import CommentModel from "../Model/commentModel.js";
 // Controller function to create a new comment
  export const createComment = async (req, res) => {
     try {
-        const { content, postId } = req.body;
+        const { comment, postId ,userId} = req.body;
 
         // Create a new comment
-        const comment = new CommentModel({
-            content,
-            user: userId,
-            post: postId
+        const comments = new CommentModel({
+            comment,
+            userId: userId,
+            postId: postId
         });
 
         // Save the comment to the database
-        await comment.save();
+        await comments.save();
 
         res.status(200).json(comment);
     } catch (error) {
@@ -30,9 +30,10 @@ export const  getCommentsForPost = async (req, res) => {
         const postId = req.params.postId;
 
         // Find comments for the specified post
-        const comments = await CommentModel.find({ post: postId }).populate('user');
+        const comments = await CommentModel.find({ postId: postId })
 
-        res.json(comments);
+    
+        res.status(200).json(comments);
     } catch (error) {
         console.error('Error fetching comments:', error);
         res.status(500).json({ error: 'Could not fetch comments' });
