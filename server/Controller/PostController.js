@@ -15,8 +15,10 @@ export const createPost = async (req, res) => {
 }
 export const getPost = async (req, res) => {
     const { id } = req.params
+    console.log("hii");
     try {
         const post = await PostModel.findById(id)
+        console.log(post);
         res.status(200).json(post)
     } catch (error) {
         res.status(500).json(error.message)
@@ -68,7 +70,7 @@ export const likePost = async (req, res) => {
   
     try {
         const post = await PostModel.findById(id);
-        console.log(post);
+      
         if (post.like.includes(userId)) {
             await post.updateOne({ $pull: { like: userId } });
             res.status(200).json("Post disliked");

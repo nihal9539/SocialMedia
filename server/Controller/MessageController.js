@@ -3,7 +3,6 @@ import MessageModel from "../Model/MessageModel.js"
 
 export const addMessage =async (req,res)=>{
   const {chatId,senderId,text} = req.body
-  console.log(req.body);
 
   const message = new MessageModel({
     chatId,
@@ -23,7 +22,7 @@ export const addMessage =async (req,res)=>{
 }
 export const getMessage =async (req,res)=>{
   const {chatId} = req.params
-  console.log(chatId);
+
 
 
     try {

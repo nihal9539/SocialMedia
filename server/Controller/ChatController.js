@@ -3,7 +3,7 @@ import ChatModel from "../Model/ChatModel.js";
 
 // Register New User
 export const createChat = async (req, res) => {
-    console.log("hii");
+   
     console.log(req.body.senderId, req.body.receiverId);
     const newChat = new ChatModel({
         members: [req.body.senderId, req.body.receiverId]
@@ -40,7 +40,7 @@ export const findChat = async (req, res) => {
         const chat = await ChatModel.findOne({
             members: { $all: [req.params.firstId, req.params.secondId] }
         })
-        console.log(chat);
+
         res.status(200).json(chat)
 
 

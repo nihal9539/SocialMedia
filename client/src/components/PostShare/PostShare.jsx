@@ -54,35 +54,50 @@ const PostShare = () => {
     }
     return (
         <div className='PostShare'>
-            <img src={user.profilePicture ? serverPublic + user.profilePicture : ProfileImage} alt="" />
-            <div>
+            <div className='PostInput'>
+                <img src={user.profilePicture ? serverPublic + user.profilePicture : ProfileImage} alt="" />
                 <input
                     ref={desc}
                     required
                     type="text"
                     placeholder="What's Happening" />
+            </div>
+            <div className='optionInput'>
+
                 <div className="PostOption">
                     <div className="option"
                         onClick={() => imageRef.current.click()}
                         style={{ color: "var(--photo)" }}
                     >
                         <UilScenery />
-                        Photo
+                        <span>
+
+                            Photo
+                        </span>
                     </div >
                     <div style={{ color: "var(--vide0)" }}
                         className="option">
                         <UilPlayCircle />
-                        Video
+                        <span>
+
+                            Video
+                        </span>
                     </div>
                     <div style={{ color: "var(--location)" }}
                         className="option">
                         <UilLocationPoint />
-                        Location
+                        <span>
+
+                            Location
+                        </span>
                     </div>
                     <div style={{ color: "var(--shedule)" }}
                         className="option">
                         <UilSchedule />
-                        Shedule
+                        <span>
+
+                            Shedule
+                        </span>
                     </div>
                     <button
                         disabled={loading}

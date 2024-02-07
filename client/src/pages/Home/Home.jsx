@@ -5,12 +5,16 @@ import PostSide from '../../components/PostSide/PostSide'
 import {useSelector, useDispatch} from 'react-redux'
 
 import RightSide from '../../components/RightSide/RightSide'
+import NavIcons from '../../components/NavIcons/NavIcons'
 
 const Home = () => {
 
 
   return (
     <div className='Home'>
+      <div className="navIcon">
+      <NavIcons/>
+      </div>
       <Profile/>
       <PostSide/>
       <RightSide/>

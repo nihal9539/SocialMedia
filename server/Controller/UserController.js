@@ -8,7 +8,7 @@ export const getUser = async (req, res) => {
 
 
     const id = req.params.id
-    console.log(id);
+
     try {
         const user = await UserModel.findById(id)
         if (user) {
@@ -26,7 +26,7 @@ export const getUser = async (req, res) => {
 export const getAllUser = async (req, res) => {
 
     try {
-        console.log("hi");
+
       let users = await UserModel.find();
       users = users.map((user)=>{
         const {password, ...otherDetails} = user._doc
@@ -47,7 +47,7 @@ export const updateUser = async (req, res) => {
             if (password) {
                 const salt = await bcypt.genSalt(10)
                 req.body.password = await bcypt.hash(password, salt)
-                console.log(req.body);
+
             }
             const user = await UserModel.findByIdAndUpdate(id, zz, { new: true })
 

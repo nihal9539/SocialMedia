@@ -5,10 +5,10 @@ const secret = process.env.JWT_SECRET;
 const authMiddleWare = async (req,res,next)=>{
     try {
         const token = req.headers.Authrization.split("")[1]
-        console.log(token);
+      
         if (token) {
             const decode = jwt.verify(token,secret)
-            console.log(decode);
+ 
             req.body._id = decode?.id;
         }
         next();

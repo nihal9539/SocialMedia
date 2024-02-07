@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { uploadImage } from '../../Action/uploadAction';
 import { updateUser } from '../../Action/userAction';
+import "./ProfileModel.css"
 
 export function ProfileModel({ ModelOpene, setModelOpen, data }) {
     //   const [opened, { open, close }] = useState(false);
@@ -26,6 +27,7 @@ export function ProfileModel({ ModelOpene, setModelOpen, data }) {
             e.target.name == "profileImage" ? setProfileImage(img) : setCoverImage(img)
         }
     }
+    const width = window.innerWidth
     const handleSubmit = (e) => {
         e.preventDefault();
         let UserData = formData;
@@ -59,12 +61,15 @@ export function ProfileModel({ ModelOpene, setModelOpen, data }) {
         setModelOpen(false);
     };
 
+
     return (
         <>
-            <Modal opened={ModelOpene} onClose={() => setModelOpen(false)} size={'55%'} >
+            <Modal opened={ModelOpene} onClose={() => setModelOpen(false)} style={{
+                height:"100%"
+            }} size={`${width >= 650 ? "55%" : "100%"}`}  >
                 {/* Modal content */}
 
-                <form action="" className='InfoForm'>
+                <form action="" className='InfoForms'>
                     <h3>Your Info</h3>
                     <div>
                         <input
@@ -138,7 +143,9 @@ export function ProfileModel({ ModelOpene, setModelOpen, data }) {
                         <input type="file" name="coverImage" onChange={onImageChange} />
                     </div>
 
-                    <button className='button fc-button' onClick={handleSubmit}>Update</button>
+                    <div>
+                        <button className='button fc-button' onClick={handleSubmit}>Update</button>
+                    </div>
                 </form>
             </Modal>
             {/* <Button onClick={open}>Open modal</Button> */}

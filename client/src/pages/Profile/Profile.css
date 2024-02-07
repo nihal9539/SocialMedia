@@ -10,3 +10,19 @@
     overflow: scroll;
     gap: 1rem;
 }
+.Profile .navIcon{
+    display: none;
+}
+
+
+@media (max-width:768px) {
+
+    .Profile{
+        display: flex;
+        flex-direction: column;
+    }
+    .Profile .navIcon{
+        display: block;
+    }
+    
+}
