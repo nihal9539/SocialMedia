@@ -24,7 +24,7 @@ const Posts = () => {
                     posts.map((post, id) => {
                         return (
                             <Post data={post} id={id} />
-                            // <div>hi</div>
+                        
                         )
                     })}
         </div>

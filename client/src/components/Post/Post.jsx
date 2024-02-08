@@ -9,6 +9,7 @@ import { likePost } from '../../api/postRequest'
 import { IoMdSend } from "react-icons/io";
 import Profile from "../../img/profileImg.jpg"
 import { createComment, getComment } from '../../Action/CommentAction'
+import CommentSection from '../Comments/CommentSection'
 
 const Post = ({ data, id }) => {
 
@@ -19,10 +20,7 @@ const Post = ({ data, id }) => {
     const [likes, setLikes] = useState(data.like.length)
     const [commentSectionOpen, setCommentSectionOpen] = useState(false)
     const [comment, setComments] = useState("")
-    let { comments, loading ,uploading } = useSelector((state) => state.commentReducer)
-    useEffect(() => {
-        dispatch(getComment(data._id))
-    }, [comment])
+
     const handleLike = () => {
         setLiked((prev) => !prev)
         likePost(data._id, user._id)
@@ -77,9 +75,12 @@ const Post = ({ data, id }) => {
             </div>
             {commentSectionOpen ?
                 <div className="comment">
+                    {
+                     <CommentSection postId={data._id}/>
+                    }
 
-                    { loading || uploading ? "loading..":
-                        comments.map((commments) => {
+                    {/* { loading || uploading ? "loading..":
+                        comments?.map((commments) => {
 
                             return (
                                 <div className='commenter'>
@@ -95,11 +96,12 @@ const Post = ({ data, id }) => {
 
 
                                 </div>
+                               
 
                             )
                         })
                        
-                    }
+                    } */}
 
 
                 </div>

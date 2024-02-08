@@ -1,17 +1,36 @@
 const commentReducer = (
-  state = { comments: [null], loading: false, error: false, uploading: true },
+  state = { comments: [], loading: false, error: false, },
   action
 ) => {
+  // console.log(action);
+  console.log(state.comments);
   switch (action.type) {
-    // belongs to commentshare.jsx
+    case "ADD_COMMENT_START":
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+      case "ADD_COMMENT_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        comments: [...state.comments, action.data],
+        error: null
+      };
+      case "ADD_COMMENT_FAILURE":
+      return {
+        ...state,
+        loading: false,
+        error: action.data
+      };
 
-    // belongs to comments.jsx
     case "COMMENT_START":
-      return { ...state, loading: true, error: false, uploading: true };
+      return { ...state, loading: true, error: false,  };
     case "COMMENT_SUCCESS":
-      return { ...state, comments: action.data, loading: false, error: false, uploading: false };
+      return { ...state, comments: action.data, loading: false, error: false};
     case "COMMENT_FAIL":
-      return { ...state, loading: false, error: true, uploading: false };
+      return { ...state, loading: false, error: true, };
     default:
       return state;
   }
